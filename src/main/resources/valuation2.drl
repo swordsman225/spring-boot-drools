@@ -1,0 +1,23 @@
+package rules;
+dialect  "mvel"
+
+rule "rule_21"
+    when
+        eval(true)
+    then
+        System.out.println("Rule 21 execute!");
+end
+
+rule "rule_22"
+    when
+        eval(false)
+    then
+        System.out.println("Rule 22 execute!");
+end
+
+rule "rule_23"
+    when
+        eval(true)
+    then
+        System.out.println("Rule 23 execute!");
+end

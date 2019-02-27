@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-boot-drools
+
+server:
+  port: 8081
