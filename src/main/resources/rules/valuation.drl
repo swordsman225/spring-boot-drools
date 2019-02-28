@@ -1,23 +1,22 @@
 package rules;
 dialect  "mvel"
+import com.huawei.hicloud.model.ValuationFact;
+import javafx.beans.binding.When;
 
-rule "rule_1"
-    when
-        eval(true)
-    then
-        System.out.println("Rule 1 execute!");
-end
 
-rule "rule_2"
+rule "valuation"
     when
-        eval(false)
+        $fact : ValuationFact(price > 100)
     then
-        System.out.println("Rule 2 execute!");
-end
+        $fact.setPrice((int) ($fact.getPrice() * 0.8));
+        System.out.println("Rule valuation execute end!");
+    end
 
-rule "rule_3"
+
+rule "valuation2"
     when
-        eval(true)
+        $fact : ValuationFact(price > 100)
     then
-        System.out.println("Rule 3 execute!");
-end
+        $fact.setPrice((int) ($fact.getPrice() * 0.8));
+        System.out.println("Rule valuation execute end!");
+    end
