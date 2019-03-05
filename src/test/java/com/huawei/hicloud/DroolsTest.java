@@ -2,21 +2,21 @@ package com.huawei.hicloud;
 
 import com.alibaba.fastjson.JSON;
 import com.huawei.hicloud.model.ValuationFact;
-import org.drools.core.base.RuleNameEndsWithAgendaFilter;
 import org.drools.core.base.RuleNameMatchesAgendaFilter;
 import org.drools.core.impl.InternalKnowledgeBase;
 import org.drools.core.impl.KnowledgeBaseFactory;
 import org.junit.Test;
+import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.AgendaFilter;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderError;
 import org.kie.internal.builder.KnowledgeBuilderErrors;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.utils.KieHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ResourceUtils;
@@ -82,6 +82,8 @@ public class DroolsTest {
 
         KnowledgeBuilder kBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
         kBuilder.add(ResourceFactory.newByteArrayResource(ruleContent.getBytes("utf-8")), ResourceType.DRL);
+        //kBuilder.add(ResourceFactory.newClassPathResource("changeset.xml", DroolsTest.class), ResourceType.CHANGE_SET);
+
 
         KnowledgeBuilderErrors errors = kBuilder.getErrors();
         boolean hasError = false;
@@ -97,7 +99,6 @@ public class DroolsTest {
         InternalKnowledgeBase kBase = KnowledgeBaseFactory.newKnowledgeBase();
         kBase.addPackages(kBuilder.getKnowledgePackages());
 
-
         KieSession kSession = kBase.newKieSession();
 
         ValuationFact fact = new ValuationFact();
@@ -108,11 +109,41 @@ public class DroolsTest {
         int count = kSession.fireAllRules();
         log.info("Execute {} rules!", count);
 
-        log.info("Rule engin execute result: {}.", JSON.toJSONString(fact));
+        log.info("Rule engin execute result, fact: {}.", JSON.toJSONString(fact));
 
         kSession.dispose();
     }
 
+    @Test
+    public void test04() {
+        String ruleFilePath = "classpath:rules/valuation2.drl";
+        String ruleContent = this.getFileContent(ruleFilePath);
+
+        KieHelper helper = new KieHelper();
+        helper.addContent(ruleContent, ResourceType.DRL);
+        KieBase kBase = helper.build();
+        KieSession kSession = kBase.newKieSession();
+
+
+        ValuationFact fact1 = new ValuationFact();
+        fact1.setPrice(200);
+        ValuationFact fact2 = new ValuationFact();
+        fact2.setPrice(300);
+
+        kSession.insert(fact1);
+        kSession.insert(fact2);
+        // 全局变量
+        //kSession.setGlobal("", null);
+
+        int count = kSession.fireAllRules();
+        log.info("Execute {} rules!", count);
+        kSession.fireAllRules();
+        //kSession.startProcess("");
+        log.info("Rule engin execute result, fact1: {}, fact2: {}.",
+                JSON.toJSONString(fact1), JSON.toJSONString(fact2));
+
+        kSession.dispose();
+    }
 
 
     public String getFileContent(String filePath) {

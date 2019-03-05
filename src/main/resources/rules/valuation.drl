@@ -3,13 +3,16 @@ dialect  "mvel"
 import com.huawei.hicloud.model.ValuationFact;
 import javafx.beans.binding.When;
 
+global java.lang.Integer $price
+
 
 rule "valuation"
     when
-        $fact : ValuationFact(price > 100)
+        $fact: ValuationFact(price > 100)
     then
         $fact.setPrice((int) ($fact.getPrice() * 0.8));
-        System.out.println("Rule valuation execute end!");
+        $price = $fact.getPrice();
+        System.out.println("Rule valuation execute end! price = " + $price);
     end
 
 
@@ -18,5 +21,5 @@ rule "valuation2"
         $fact : ValuationFact(price > 100)
     then
         $fact.setPrice((int) ($fact.getPrice() * 0.8));
-        System.out.println("Rule valuation execute end!");
+        System.out.println("Rule valuation2 execute end! price = " + $price);
     end

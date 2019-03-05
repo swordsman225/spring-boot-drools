@@ -1,0 +1,18 @@
+package rules;
+dialect  "mvel"
+
+import com.huawei.hicloud.model.ValuationFact
+import com.alibaba.fastjson.JSON;
+
+rule "rule_1"
+
+    when
+        $v1: ValuationFact()
+        $v2: ValuationFact()
+    then
+        System.out.println("Valuation execute!");
+        System.out.println("$v1: " + JSON.toJSONString($v1));
+        System.out.println("$v1: " + JSON.toJSONString($v2));
+        System.out.println("============================================ ");
+end
+

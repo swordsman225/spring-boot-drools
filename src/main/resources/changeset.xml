@@ -1,0 +1,17 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+
+<change-set xmlns='http://drools.org/drools-5.0/change-set'
+            xmlns:xs='http://www.w3.org/2001/XMLSchema-instance'
+            xs:schemaLocation='http://drools.org/drools-5.0/change-setchange-set-5.0.xsdhttp://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-api/src/main/resources/change-set-1.0.0.xsd'>
+
+    <add>
+        <!-- 直接引入 -->
+        <resource source='classpath:rules/valuation1.drl' type='DRL' />
+        <!-- 下面两种方式没写，例子请注释 -->
+        <!-- 文件夹引入，自动导入文件夹下的文件 -->
+        <!--<resource source="classPath:com/sample/drl/" type="DRL"/>-->
+        <!-- 外部链接引入 -->
+        <!--<resource source="http://www.baidu.com" type="DRL" />-->
+    </add>
+
+</change-set>
