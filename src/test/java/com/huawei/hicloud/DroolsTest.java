@@ -73,8 +73,6 @@ public class DroolsTest {
     }
 
 
-
-
     @Test
     public void test03() throws Exception {
         String ruleFilePath = "classpath:rules/valuation.drl";
@@ -164,6 +162,11 @@ public class DroolsTest {
         log.info("Rule file content: {}.", content);
 
         return content;
+    }
+
+    @Test
+    public void testComplexFact() {
+
     }
 
 }

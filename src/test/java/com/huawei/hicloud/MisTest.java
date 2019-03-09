@@ -25,7 +25,7 @@ public class MisTest {
         sub.setId("321");
         sub.setName("subnet");
         sub.setCidr("192.168.10.0/24");
-        networkVO.setSubnetVO(null);
+        networkVO.setSubnetVO(sub);
 
         cidr = Optional.ofNullable(networkVO).map(n -> n.getSubnetVO()).map(s -> s.getCidr()).orElse("");
 

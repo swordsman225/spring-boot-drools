@@ -25,7 +25,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
+        <!-- drools -->
+        <!--<dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
             <version>${drools.version}</version>
@@ -44,7 +45,14 @@
             <groupId>org.drools</groupId>
             <artifactId>drools-templates</artifactId>
             <version>${drools.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-spring</artifactId>
+            <version>${drools.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>com.alibaba</groupId>
